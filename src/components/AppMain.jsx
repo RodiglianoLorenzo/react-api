@@ -4,6 +4,10 @@ export default function AppMain() {
 
     const [actors, setActors] = useState([])
     const [actresses, setActresses] = useState([])
+
+    const allActors = [...actors, ...actresses]
+    console.log(allActors);
+
     function getActors() {
 
         const api_actors = `https://lanciweb.github.io/demo/api/actors/`
@@ -32,42 +36,27 @@ export default function AppMain() {
                 <div className="container">
                     <div className="row row-cols-3">
                         {
-                            actors.map((actor) => (
+                            allActors.map((person, index) => (
 
-                                <div key={actor.id} className="col my-3" >
+                                <div key={index} className="col my-3" >
                                     <div className="card h-100 text-center bg_Card">
-                                        <h5 className="card-title text-white">{actor.name}</h5>
-                                        <img src={actor.image} className="card-img-top p-5 pb-0" alt="..." />
-                                        <span className="text-white">{actor.birth_year}, {actor.nationality}</span>
+                                        <h5 className="card-title text-white">{person.name}</h5>
+                                        <img src={person.image} className="card-img-top p-5 pb-0" alt="..." />
+                                        <span className="text-white">{person.birth_year}, {person.nationality}</span>
                                         <div className="card-body ">
-                                            <p className="card-text text-white">{actor.biography}</p>
+                                            <p className="card-text text-white">{person.biography}</p>
                                             <div className="fw-bolder mb-0 text-danger">Known for:</div>
-                                            <p className="card-text text-danger "> {actor.known_for.join(', ')} </p>
+                                            {person.known_for ? <p className="card-text text-danger "> {person.known_for.join(', ')} </p> :
+                                                <p className="card-text text-danger "> {person.most_famous_movies.join(', ')} </p>}
                                             <div className="fw-bolder mb-0 text-warning">Awards:</div>
-                                            <p className="card-text text-warning">{actor.awards.join(' ,')}</p>
+                                            <p className="card-text text-warning">{person.awards.join(' ,')}</p>
                                         </div>
                                     </div>
+
                                 </div>
 
                             ))
-                        }
-                        {
-                            actresses.map((actresse) => (
-                                <div key={actresse.id} className="col my-3" >
-                                    <div className="card  h-100 text-center bg_Card">
-                                        <h5 className="card-title text-white">{actresse.name}</h5>
-                                        <img src={actresse.image} className="card-img-top p-5 pb-0" alt="..." />
-                                        <span className="text-white">{actresse.birth_year}, {actresse.nationality}</span>
-                                        <div className="card-body ">
-                                            <p className="card-text text-white">{actresse.biography}</p>
-                                            <div className="fw-bolder mb-0 text-danger">Known for:</div>
-                                            <p className="card-text text-danger "> {actresse.most_famous_movies.join(', ')} </p>
-                                            <div className="fw-bolder mb-0 text-warning">Awards:</div>
-                                            <p className="card-text text-warning">{actresse.awards.join(', ')}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))
+
                         }
                     </div>
                 </div >
